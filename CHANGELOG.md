@@ -66,6 +66,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automated data import from Oracle `.dmp` files
 - `OracleContainer` helper class for container management
 
-[Unreleased]: https://github.com/username/rrc-field-rules/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/username/rrc-field-rules/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/username/rrc-field-rules/releases/tag/v0.1.0
+[Unreleased]: https://github.com/jippylong12/rrc_field_rules/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/jippylong12/rrc_field_rules/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/jippylong12/rrc_field_rules/releases/tag/v0.1.0

@@ -45,9 +45,9 @@ dev = [
 rrc-field-rules = "rrc_field_rules.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/username/rrc-field-rules"
-Documentation = "https://github.com/username/rrc-field-rules#readme"
-Issues = "https://github.com/username/rrc-field-rules/issues"
+Homepage = "https://github.com/jippylong12/rrc_field_rules"
+Documentation = "https://github.com/jippylong12/rrc_field_rules#readme"
+Issues = "https://github.com/jippylong12/rrc_field_rules/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/rrc_field_rules"]
