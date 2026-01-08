@@ -7,6 +7,7 @@ class OracleContainer:
 
     def start(self):
         print("🚀 Starting Oracle Container...")
+        # Start Docker in detached mode
         subprocess.run(["docker-compose", "-f", self.compose_file, "up", "-d"], check=True)
         self._wait_for_import_completion()
 
@@ -15,22 +16,22 @@ class OracleContainer:
         subprocess.run(["docker-compose", "-f", self.compose_file, "down"], check=True)
 
     def _wait_for_import_completion(self):
-        """Polls the Docker logs to ensure the legacy import script has finished."""
-        print("⏳ Waiting for legacy import to finish (this happens inside the container)...")
+        """Polls logs to ensure the .dmp file is fully imported before giving the green light."""
+        print("⏳ Waiting for legacy data import to complete (this happens inside the container)...")
         container_name = "rrc_oracle_parser"
         
-        for _ in range(60):  # Wait up to 10 minutes
-            # Check container logs for our success message
+        # Poll for up to 5 minutes
+        for _ in range(30): 
             result = subprocess.run(
                 ["docker", "logs", container_name],
                 capture_output=True, text=True
             )
             
-            # This is the string we echoed in init_oracle.sh
+            # This matches the success message from our init_oracle.sh script
             if "AUTOMATED SETUP COMPLETE" in result.stdout:
-                print("✅ Database is ready and Data is Imported!")
+                print("✅ Data Import Finished.")
                 return
             
             time.sleep(10)
         
-        raise TimeoutError("Oracle DB came up, but the data import script timed out.")
+        raise TimeoutError("❌ Oracle started, but the data import script timed out.")
