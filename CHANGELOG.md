@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-01-08
+
+### Added
+
+- **Human-Readable Code Expansion**
+  - New `expand_codes` parameter in `ParserConfig` to expand coded values to text
+  - CLI flag `--expand-codes` / `-e` for the `export` command
+  - Supports all coded fields:
+    - `field_class_code`: O → Oil, G → Gas, B → Both
+    - `field_h2s_flag`: Y → Yes - H2S Present, N → No, E → Exempt
+    - `oil_or_gas_code`, `rule_type_code`, `diagonal_type_code`
+    - `derived_rule_type_code`, `std_field_rule_code`
+    - `offshore_code`, `district_code`
+    - All Y/N flags: `wildcat_flag`, `salt_dome_flag`, `dont_permit_flag`, etc.
+- New `codes.py` module with `expand_code()` and `expand_record()` functions
+- 21 new tests for code expansion functionality (34 total tests)
+
+### Changed
+
+- Environment variable `RRC_EXPAND_CODES` can enable code expansion globally
+
 ## [0.1.0] - 2026-01-08
 
 ### Added
@@ -45,5 +66,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automated data import from Oracle `.dmp` files
 - `OracleContainer` helper class for container management
 
-[Unreleased]: https://github.com/username/rrc-field-rules/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/username/rrc-field-rules/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/username/rrc-field-rules/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/username/rrc-field-rules/releases/tag/v0.1.0

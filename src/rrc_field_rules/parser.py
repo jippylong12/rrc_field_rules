@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from rrc_field_rules.codes import expand_record
 from rrc_field_rules.config import ParserConfig
 from rrc_field_rules.connection import OracleConnection
 from rrc_field_rules.exceptions import QueryError, TableNotFoundError
@@ -36,6 +37,11 @@ class FieldRulesParser:
 
             # Export to JSON
             parser.export_all_to_json(Path("./output.json"))
+
+        # With human-readable code expansion
+        config = ParserConfig(password="secret", expand_codes=True)
+        parser = FieldRulesParser(config)
+        # Now 'O' becomes 'Oil', 'N' becomes 'No', etc.
     """
 
     def __init__(self, config: ParserConfig) -> None:
@@ -46,6 +52,11 @@ class FieldRulesParser:
         """
         self._config = config
         self._connection = OracleConnection(config)
+
+    @property
+    def expand_codes(self) -> bool:
+        """Whether to expand coded values to human-readable text."""
+        return self._config.expand_codes
 
     def check_health(self) -> bool:
         """Check database connectivity.
@@ -129,6 +140,7 @@ class FieldRulesParser:
 
         Returns:
             List of dictionaries representing table rows.
+            If expand_codes is enabled, coded values are expanded to text.
 
         Raises:
             TableNotFoundError: If table doesn't exist.
@@ -143,7 +155,13 @@ class FieldRulesParser:
             query += f" WHERE ROWNUM <= {limit}"
 
         try:
-            return self._connection.execute_query(query)
+            data = self._connection.execute_query(query)
+
+            # Expand codes if enabled
+            if self.expand_codes:
+                data = [expand_record(row) for row in data]
+
+            return data
         except Exception as e:
             raise QueryError(f"Failed to query {table_name}: {e}", query) from e
 
@@ -241,6 +259,10 @@ class FieldRulesParser:
     ) -> list[Any]:
         """Get table data and convert to Pydantic models.
 
+        Note: When expand_codes is enabled, models may fail validation
+        because the expanded strings don't match Literal types.
+        Use get_table_data() for expanded data instead.
+
         Args:
             table_name: Name of the table.
             model_class: Pydantic model class to use.
@@ -249,8 +271,21 @@ class FieldRulesParser:
         Returns:
             List of Pydantic models.
         """
-        data = self.get_table_data(table_name, limit)
-        return [model_class.model_validate(row) for row in data]
+        # For Pydantic models, we need raw data (not expanded)
+        # because Literal types expect exact code values
+        table_lower = table_name.lower()
+        if table_lower not in AVAILABLE_TABLES:
+            raise TableNotFoundError(table_name)
+
+        query = f"SELECT * FROM {table_lower}"  # noqa: S608 - validated above
+        if limit:
+            query += f" WHERE ROWNUM <= {limit}"
+
+        try:
+            data = self._connection.execute_query(query)
+            return [model_class.model_validate(row) for row in data]
+        except Exception as e:
+            raise QueryError(f"Failed to query {table_name}: {e}", query) from e
 
     def _serialize_for_json(self, data: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Convert data to JSON-serializable format.
@@ -275,3 +310,4 @@ class FieldRulesParser:
                     serialized_row[key] = value
             result.append(serialized_row)
         return result
+

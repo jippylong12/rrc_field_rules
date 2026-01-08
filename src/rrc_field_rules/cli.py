@@ -100,6 +100,14 @@ def export(
         int | None,
         typer.Option("--limit", "-l", help="Limit records per table"),
     ] = None,
+    expand_codes: Annotated[
+        bool,
+        typer.Option(
+            "--expand-codes",
+            "-e",
+            help="Expand coded values to human-readable text (e.g., 'O' -> 'Oil')",
+        ),
+    ] = False,
     host: Annotated[str, typer.Option(help="Oracle host")] = "localhost",
     port: Annotated[int, typer.Option(help="Oracle port")] = 1521,
     service: Annotated[str, typer.Option(help="Oracle service name")] = "FREEPDB1",
@@ -110,7 +118,12 @@ def export(
 ) -> None:
     """Export field rules data to JSON file."""
     config = ParserConfig(
-        host=host, port=port, service=service, user=user, password=password
+        host=host,
+        port=port,
+        service=service,
+        user=user,
+        password=password,
+        expand_codes=expand_codes,
     )
 
     # Validate table name if provided

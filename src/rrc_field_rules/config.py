@@ -17,6 +17,8 @@ class ParserConfig(BaseSettings):
         service: Oracle service name. Defaults to "FREEPDB1".
         user: Oracle username. Defaults to "PROD_OG_OWNR".
         password: Oracle password. Required, no default.
+        expand_codes: If True, expand coded values to human-readable text.
+            For example, 'O' -> 'Oil', 'N' -> 'No'. Defaults to False.
     """
 
     model_config = SettingsConfigDict(
@@ -31,6 +33,7 @@ class ParserConfig(BaseSettings):
     service: str = "FREEPDB1"
     user: str = "PROD_OG_OWNR"
     password: SecretStr
+    expand_codes: bool = False
 
     @property
     def dsn(self) -> str:
@@ -41,3 +44,4 @@ class ParserConfig(BaseSettings):
     def connection_string(self) -> str:
         """Generate full connection string for display (password masked)."""
         return f"{self.user}@{self.dsn}"
+
