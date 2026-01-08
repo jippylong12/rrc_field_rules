@@ -42,6 +42,9 @@ class TestExpandCode:
         assert expand_code("wildcat_flag", "N") == "No"
         assert expand_code("salt_dome_flag", "Y") == "Yes"
         assert expand_code("dont_permit_flag", "N") == "No"
+        assert expand_code("schedule_remarks", "Y") == "Yes"
+        assert expand_code("schedule_remarks", "N") == "No"
+        assert expand_code("field_manual_rev_flag", "Y") == "Yes"
 
     def test_rule_type_code(self) -> None:
         """Test rule type code expansion."""

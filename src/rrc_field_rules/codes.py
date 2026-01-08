@@ -135,6 +135,7 @@ FIELD_MAPPINGS: dict[str, dict[str, str]] = {
     "wildcat_flag": YES_NO_FLAG,
     "salt_dome_flag": YES_NO_FLAG,
     "dont_permit_flag": YES_NO_FLAG,
+    "schedule_remarks": YES_NO_FLAG,  # Y=show remarks on terminal, N=don't show
     "rule_type_code": RULE_TYPE_CODE,
     "diagonal_type_code": DIAGONAL_TYPE_CODE,
     "derived_rule_type_code": DERIVED_RULE_TYPE_CODE,
