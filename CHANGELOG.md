@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-01-08
+
+### Fixed
+
+- **Oracle Datetime Compatibility** - Changed all date fields (`modified_dt`, `rescind_dt`, `discovery_dt`, `effective_dt`) from `date` to `datetime` type to properly handle Oracle DATE columns that include time components. This fixes Pydantic 2.x validation errors when Oracle returns datetime objects with non-zero time (e.g., `datetime(2025, 12, 19, 1, 26, 51)`).
+
+### Added
+
+- Comprehensive datetime field tests for `OgField`, `OgFieldInfo`, and `OgFieldRule` models
+- New `sample_field_info_data` test fixture with realistic Oracle datetime values
+- Test coverage for datetime fields with time components and None values
+- Test for datetime JSON serialization
+
 ## [1.0.0] - 2026-01-08
 
 ### Added
@@ -74,7 +87,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automated data import from Oracle `.dmp` files
 - `OracleContainer` helper class for container management
 
-[Unreleased]: https://github.com/jippylong12/rrc_field_rules/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/jippylong12/rrc_field_rules/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/jippylong12/rrc_field_rules/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/jippylong12/rrc_field_rules/compare/v0.2.0...v1.0.0
 [0.2.0]: https://github.com/jippylong12/rrc_field_rules/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/jippylong12/rrc_field_rules/releases/tag/v0.1.0

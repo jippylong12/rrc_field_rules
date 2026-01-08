@@ -4,10 +4,11 @@ These models represent the Oracle database tables containing field rules data
 from the Texas Railroad Commission Oil & Gas Division.
 """
 
-from datetime import date
+from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
+
 
 
 class OgField(BaseModel):
@@ -48,7 +49,7 @@ class OgField(BaseModel):
         None, description="Related oil field ID when gas field has different number."
     )
     modified_by: str | None = Field(None, max_length=30, description="Last modifier ID.")
-    modified_dt: date | None = Field(None, description="Last modification date.")
+    modified_dt: datetime | None = Field(None, description="Last modification datetime.")
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -72,8 +73,8 @@ class OgFieldInfo(BaseModel):
         max_length=2,
         description="Rule type: CR=county rules, MC=McCulloch, SP=special, SW=statewide.",
     )
-    rescind_dt: date | None = Field(
-        None, description="Date field rules rescinded (reverted to statewide)."
+    rescind_dt: datetime | None = Field(
+        None, description="Datetime field rules rescinded (reverted to statewide)."
     )
     offshore_code: str | None = Field(
         None,
@@ -94,14 +95,14 @@ class OgFieldInfo(BaseModel):
         max_length=2000,
         description="Horizontal/vertical drilling spacing & depth remarks.",
     )
-    discovery_dt: date | None = Field(
-        None, description="Discovery date of first well (CCYYMMDD format)."
+    discovery_dt: datetime | None = Field(
+        None, description="Discovery datetime of first well."
     )
     county_code: str | None = Field(
         None, max_length=3, description="County code (odd=onshore, even=offshore)."
     )
     modified_by: str | None = Field(None, max_length=30, description="Last modifier ID.")
-    modified_dt: date | None = Field(None, description="Last modification date.")
+    modified_dt: datetime | None = Field(None, description="Last modification datetime.")
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -138,9 +139,9 @@ class OgFieldRule(BaseModel):
     maximum_diagonal_length: float | None = Field(
         None, description="Maximum diagonal measurement (feet)."
     )
-    effective_dt: date | None = Field(None, description="Rule effective date.")
+    effective_dt: datetime | None = Field(None, description="Rule effective datetime.")
     modified_by: str | None = Field(None, max_length=30, description="Last modifier ID.")
-    modified_dt: date | None = Field(None, description="Last modification date.")
+    modified_dt: datetime | None = Field(None, description="Last modification datetime.")
 
     model_config = ConfigDict(from_attributes=True)
 
