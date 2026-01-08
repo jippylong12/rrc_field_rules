@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-01-08
+
+### Added
+
+- 🎉 **Stable Release** - First production-ready release
+- Comprehensive test coverage (34 tests)
+- Full documentation and PyPI publication
+
 ## [0.2.0] - 2026-01-08
 
 ### Added
@@ -66,6 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automated data import from Oracle `.dmp` files
 - `OracleContainer` helper class for container management
 
-[Unreleased]: https://github.com/jippylong12/rrc_field_rules/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/jippylong12/rrc_field_rules/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/jippylong12/rrc_field_rules/compare/v0.2.0...v1.0.0
 [0.2.0]: https://github.com/jippylong12/rrc_field_rules/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/jippylong12/rrc_field_rules/releases/tag/v0.1.0
