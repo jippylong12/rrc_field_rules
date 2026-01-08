@@ -81,3 +81,9 @@ strict = true
 [[tool.mypy.overrides]]
 module = ["oracledb.*"]
 ignore_missing_imports = true
+
+[dependency-groups]
+dev = [
+    "build>=1.4.0",
+    "twine>=6.2.0",
+]
